@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Core\Controller;
+use Core\Query;
 
 class DataController extends Controller
 {
@@ -12,39 +13,15 @@ class DataController extends Controller
             abort(404, 'Не найден обязательный параметр table.');
         }
 
-        // If the table is not allowed
-        if (!in_array($_GET['table'], DB_TABLES)) {
-            abort(404, 'Недопустимое значение параметра table.');
-        }
+        $id = isset($_GET['id']) && intval($_GET['id']) > 0
+            ? $_GET['id']
+            : null;
 
-        $sql = "SELECT * FROM {$_GET['table']}";
+        $query = new Query($_GET['table']);
 
-        $id = null;
-        if (isset($_GET['id']) && intval($_GET['id']) > 0) {
-            $sql .= ' WHERE id=:id';
-
-            $id = intval($_GET['id']);
-        }
-
-        $pdo = db()->pdo();
-
-        $query = $pdo->prepare($sql);
-
-        if ($id) {
-            $query->bindParam(':id', $_GET['id']);
-        }
-
-        $query->execute();
-
-        if ($query->errorCode() != '00000') {
-            throw new \Exception($query->errorInfo()[1] . ' - ' . $query->errorInfo()[2]);
-        }
-
-        if ($id) {
-            $results = $query->fetch(\PDO::FETCH_ASSOC);
-        } else {
-            $results = $query->fetchAll(\PDO::FETCH_ASSOC);
-        }
+        $results = $id
+            ? $query->where('id', '=', $id)->first()
+            : $query->get();
 
         return response()->response($results);
     }

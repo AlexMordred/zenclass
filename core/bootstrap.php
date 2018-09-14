@@ -2,6 +2,7 @@
 
 use Core\Router;
 use Core\Log;
+use Core\DB;
 
 // Отлавливание исключений
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
@@ -9,8 +10,8 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 });
 
 try {
-    // Создаем необходимые таблицы в БД, если они еще не созданы
-    db()->install();
+    // Инициализируем соединение с БД
+    DB::init();
 
     // Загружаем маршруты
     require_once __DIR__ . '/../app/routes.php';
