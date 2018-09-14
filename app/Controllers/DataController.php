@@ -10,7 +10,7 @@ class DataController extends Controller
     public function index()
     {
         if (!isset($_GET['table'])) {
-            abort(404, 'Не найден обязательный параметр table.');
+            abort(422, 'Не найден обязательный параметр table.');
         }
 
         $id = isset($_GET['id']) && intval($_GET['id']) > 0

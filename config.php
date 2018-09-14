@@ -9,5 +9,6 @@ const DB_TABLES = [
     'News',
     'Participant',
     'Session',
+    'SessionParticipant',
     'Speaker',
 ];

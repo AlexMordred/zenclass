@@ -92,9 +92,7 @@ class Query
      */
     public function execute() : \PDOStatement
     {
-        $pdo = db()->pdo();
-
-        $query = $pdo->prepare($this->sql());
+        $query = db()->pdo()->prepare($this->sql());
 
         // Bind parameters
         foreach ($this->where as $where) {
@@ -133,5 +131,36 @@ class Query
         $result = $this->execute()->fetch(\PDO::FETCH_ASSOC);
 
         return $result ?: null;
+    }
+
+    /**
+     * Insert data into table
+     *
+     * @param array $data
+     * @return boolean
+     */
+    public function insert(array $data)
+    {
+        // Prepare the SQL
+        $fields = array_keys($data);
+        
+        $masks = array_map(function ($key) {
+            return ':' . $key;
+        }, $fields);
+
+        $fields = implode(',', $fields);
+        $masks = implode(',', $masks);
+        
+        $sql = "INSERT INTO {$this->table} ({$fields}) VALUES ({$masks})";
+
+        $query = db()->pdo()->prepare($sql);
+
+        // Bind parameters
+        foreach ($data as $field => $value) {
+            $query->bindParam(":{$field}", $value);
+        }
+
+        // Execute
+        return $query->execute();
     }
 }

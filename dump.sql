@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 14, 2018 at 01:40 PM
+-- Generation Time: Sep 14, 2018 at 01:55 PM
 -- Server version: 5.7.23-0ubuntu0.18.04.1
 -- PHP Version: 7.2.7-0ubuntu0.18.04.2
 
@@ -72,15 +72,16 @@ CREATE TABLE `Session` (
   `ID` int(11) NOT NULL,
   `Name` varchar(255) NOT NULL,
   `TimeOfEvent` datetime NOT NULL,
-  `Description` text NOT NULL
+  `Description` text NOT NULL,
+  `MaxParticipants` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Session`
 --
 
-INSERT INTO `Session` (`ID`, `Name`, `TimeOfEvent`, `Description`) VALUES
-(1, 'Laravel 5.7 from scratch', '2018-09-27 00:00:00', '');
+INSERT INTO `Session` (`ID`, `Name`, `TimeOfEvent`, `Description`, `MaxParticipants`) VALUES
+(1, 'Laravel 5.7 from scratch', '2018-09-27 00:00:00', '', 1);
 
 -- --------------------------------------------------------
 
