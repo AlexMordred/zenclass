@@ -58,10 +58,10 @@ class DB
      * @param string $table название таблицы
      * @return void
      */
-    public function clearTable($table)
-    {
-        $this->pdo()->exec("TRUNCATE TABLE {$table}");
-    }
+    // public function clearTable($table)
+    // {
+    //     $this->pdo()->exec("TRUNCATE TABLE {$table}");
+    // }
 
     /**
      * Записывает в указанную таблицу в БД указанные строки
@@ -71,35 +71,35 @@ class DB
      * @param array $rows строки таблиц (значения), которые неоходимо записать
      * @return void
      */
-    public function insert($table, $columns, $rows)
-    {
-        $columns = implode(', ', $columns);
+    // public function insert($table, $columns, $rows)
+    // {
+    //     $columns = implode(', ', $columns);
 
-        $sql = "INSERT INTO {$table} ({$columns}) VALUES ";
+    //     $sql = "INSERT INTO {$table} ({$columns}) VALUES ";
 
-        // Добавляем placeholder'ы под параметры
-        foreach ($rows as $key => $row) {
-            $row = array_fill(0, count($row), '?');
-            $row = implode(', ', $row);
+    //     // Добавляем placeholder'ы под параметры
+    //     foreach ($rows as $key => $row) {
+    //         $row = array_fill(0, count($row), '?');
+    //         $row = implode(', ', $row);
 
-            $sql .= "({$row})";
+    //         $sql .= "({$row})";
 
-            if ($key < count($rows) - 1) {
-                $sql .= ',';
-            }
-        }
+    //         if ($key < count($rows) - 1) {
+    //             $sql .= ',';
+    //         }
+    //     }
 
-        $query = db()->pdo()->prepare($sql);
+    //     $query = db()->pdo()->prepare($sql);
 
-        // Подставляем реальные значения в placeholder'ы
-        for ($i = 0; $i < count($rows); $i++) {
-            for ($q = 0; $q < count($rows[$i]); $q++) {
-                $query->bindParam(($i + 1) * ($q + 1), $rows[$i][$q]);
-            }
-        }
+    //     // Подставляем реальные значения в placeholder'ы
+    //     for ($i = 0; $i < count($rows); $i++) {
+    //         for ($q = 0; $q < count($rows[$i]); $q++) {
+    //             $query->bindParam(($i + 1) * ($q + 1), $rows[$i][$q]);
+    //         }
+    //     }
 
-        $query->execute();
-    }
+    //     $query->execute();
+    // }
 
     /**
      * Возвращает кол-во записей в указанной табилце
@@ -107,10 +107,10 @@ class DB
      * @param $string $table
      * @return integer кол-во записей
      */
-    public function countTotal($table)
-    {
-        $result = $this->pdo->query("SELECT COUNT(*) AS count FROM {$table}");
+    // public function countTotal($table)
+    // {
+    //     $result = $this->pdo->query("SELECT COUNT(*) AS count FROM {$table}");
 
-        return $result->fetch(\PDO::FETCH_ASSOC)['count'];
-    }
+    //     return $result->fetch(\PDO::FETCH_ASSOC)['count'];
+    // }
 }
