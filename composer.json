@@ -1,0 +1,22 @@
+{
+    "name": "voerro/api-from-scratch",
+    "description": "API",
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Alexander Zavyalov",
+            "email": "alex@voerro.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/",
+            "App\\": "app/"
+        },
+        "files": [
+            "core/helpers.php"
+        ]
+    }
+}
